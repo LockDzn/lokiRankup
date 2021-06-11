@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="lokiRankup">
-    <output-path>$USER_HOME$/Documents/minecraft-servers/server-1.8.8/plugins</output-path>
-    <root id="archive" name="lokiRankup.jar">
-      <element id="module-output" name="lokiRankup" />
-    </root>
-  </artifact>
-</component>
