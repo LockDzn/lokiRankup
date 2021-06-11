@@ -41,7 +41,7 @@ public class scoreboardAPI {
                     }
                 }
             }
-        }.runTaskTimer(main.plugin, 0L, 100*1);
+        }.runTaskTimer(main.plugin, 0L, 100);
     }
 
     public static void setOrUpdate(RankUpPlayer rankUpPlayer) {
@@ -59,7 +59,9 @@ public class scoreboardAPI {
 
         Objective objective = scoreboard.registerNewObjective("score", "");
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
-        objective.setDisplayName("§d§lTEST RANKUP");
+
+        String serverName = utils.formatColor(ConfigManager.getConfig().serverName);
+        objective.setDisplayName(serverName);
 
         objective.getScore(" ").setScore(9);
         objective.getScore("§fRank: §r" + rank.getName()).setScore(8);

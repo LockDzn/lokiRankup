@@ -21,27 +21,47 @@ import java.util.*;
 
 public class ConfigManager {
     public static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    public static ConfigObject configObject;
     public static PlayerObject[] playersObjectMap;
     public static RanksFileObject ranksFileObject;
 
     public static Map<UUID, RankUpPlayer> playersMap = new HashMap<>();
 
+    public static File configFile = new File(main.plugin.getDataFolder(), "config.json");
     public static File playersFile = new File(main.plugin.getDataFolder(), "players.json");
     public static File ranksFile = new File(main.plugin.getDataFolder(), "ranks.json");
 
     public static void start() {
         loadRanks();
         loadPlayers();
+        loadConfig();
     }
 
     public static void reload() {
+        configObject = null;
         playersObjectMap = null;
         ranksFileObject = null;
         playersMap.clear();
 
+        configFile = new File(main.plugin.getDataFolder(), "config.json");
         playersFile = new File(main.plugin.getDataFolder(), "players.json");
         ranksFile = new File(main.plugin.getDataFolder(), "ranks.json");
         start();
+    }
+
+    private static void loadConfig() {
+        try {
+            if (!configFile.exists()) {
+                configFile.createNewFile();
+                ConfigObject defaultConfig = new ConfigObject("&d&lServer Name", "&d&lMotd");
+                save(defaultConfig, configFile);
+            }
+
+            configObject = gson.fromJson(new FileReader(configFile), ConfigObject.class);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private static void loadPlayers() {
@@ -101,6 +121,10 @@ public class ConfigManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static ConfigObject getConfig() {
+        return configObject;
     }
 
     public static Map<UUID, RankUpPlayer> getPlayers() {

@@ -10,11 +10,13 @@ import com.loki.lokirankup.commands.home.SetPublicHomeCommand;
 import com.loki.lokirankup.commands.rankup.RanksCommand;
 import com.loki.lokirankup.commands.rankup.ReloadCommand;
 import com.loki.lokirankup.commands.rankup.ResetMineCommand;
+import com.loki.lokirankup.components.ConfigComponents;
 import com.loki.lokirankup.listeners.onBlockBreak;
 import com.loki.lokirankup.listeners.onChat;
 import com.loki.lokirankup.listeners.onInventoryClick;
 import com.loki.lokirankup.listeners.onJoin;
 import com.loki.lokirankup.managers.ConfigManager;
+import net.minecraft.server.v1_8_R3.MinecraftServer;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -30,10 +32,12 @@ public class main extends JavaPlugin {
 
         registerListeners();
         registerCommand();
+
         ConfigManager.start();
         scoreboardAPI.start();
 
-        //groupAPI.init();
+        ConfigComponents.ConfigObject configObject = ConfigManager.getConfig();
+        MinecraftServer.getServer().setMotd(utils.formatColor(configObject.motd));
     }
 
     @Override
